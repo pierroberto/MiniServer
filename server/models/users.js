@@ -1,18 +1,27 @@
 const connection = require('mongodb').MongoClient;
 const mongoose = require('mongoose');
 // Using 'mongoose.connect'
-const promise = mongoose.connect('mongodb://localhost/Users', {
-  useMongoClient: true
-});
-promise.then( db => {
-  console.log('yeah');
+
+const userSchema = mongoose.Schema({
+  name: String,
+  lastName: String,
+  age: Number
 });
 
-// mongoose.connect.on('error', console.error.bind(console, 'connection error:'));
-// mongooose.connect.once('open', () => {
-//   //connected!
-//   console.log('connected!')
-// })
-function fullList () {
-  console.log('hello')
+const users = mongoose.model('Users', userSchema);
+
+mongoose.connect('mongodb://localhost/Users');
+mongoose.connection.on('error', console.log.bind(console, 'ERROR')).once('open', () => {
+  console.log('connected successfully');
+
+})
+
+function fullList() {
+  return new Promise ((resolve, reject) => {
+    users.find((err, userList) => {
+      resolve(userList);
+    });
+  });
 }
+
+module.exports = fullList;

@@ -1,5 +1,10 @@
 const users = require('../models/users.js');
 
-//let retrieveUsers = users.fullList();
 
-//module.exports = retrieveUsers;
+function retrieveUsers (req, res) {
+  users.fullList().then((data) => {
+    res.send(data)
+  })
+}
+
+module.exports = retrieveUsers;

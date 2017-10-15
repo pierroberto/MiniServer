@@ -3,6 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
 
-
-
-//app.use(router);
+app.listen(3000, () => console.log('listening...'));
+app.use(bodyParser());
+app.use(express.static('./client'));
+app.use(router);
